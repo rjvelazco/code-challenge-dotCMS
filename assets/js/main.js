@@ -5,11 +5,7 @@
     baseUrl = document.querySelector('#img').getAttribute('src');
 
     const endPoints = ['/filter/Grayscale', '/crop_w/500/crop_h/500/fp/.65,.37', '/resize_w/800/resize_h/600', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0',''];
-
-    img.addEventListener( 'click', ()=>{
-        img.setAttribute('src', 'https://demo.dotcms.com/contentAsset/image/229040b4-2f4f-436a-94aa-7d1f5c98ebdf/fileAsset/filter/Grayscale')
-    });
-
+    
     class TypeWriter{
         constructor(element, words, time=5000){
 
