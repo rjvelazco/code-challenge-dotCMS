@@ -4,7 +4,7 @@
 :root{
     --bg-color: #fff;
     --bg-img-container-border: rgba(188, 184, 177, 0.8);
-    --bg-input-color: #f2f2f2;
+    --bg-input-color: #fff;
     --bg-url-text-color: #333;
     --font-size-url: 11px;
     --input-shadow: rgba(0,0,0,.2);
