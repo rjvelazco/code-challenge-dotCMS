@@ -92,5 +92,7 @@
     .container .card .container-url{
         width: 100%;
         font-size: 8px;
+        padding: 10px 15px;
+        border-radius: 10px;
     }  
 }
