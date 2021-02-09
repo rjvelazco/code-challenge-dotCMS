@@ -4,7 +4,7 @@
     endPointUrl = document.querySelector('#url-endPoint'),
     baseUrl = document.querySelector('#img').getAttribute('src');
 
-    const endPoints = ['', '/filter/Grayscale', '/crop_w/500/crop_h/500/fp/.65,.37', '/resize_w/800/resize_h/600', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0'];
+    const endPoints = ['/filter/Grayscale', '/crop_w/500/crop_h/500/fp/.65,.37', '/resize_w/800/resize_h/600', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0',''];
 
     img.addEventListener( 'click', ()=>{
         img.setAttribute('src', 'https://demo.dotcms.com/contentAsset/image/229040b4-2f4f-436a-94aa-7d1f5c98ebdf/fileAsset/filter/Grayscale')
@@ -47,7 +47,7 @@
             this.element.innerHTML =  `<span class="txt">${this.txt}</pan>`;
 
             // Type Sepped by default
-            let typeSpeed = 500;
+            let typeSpeed = 200;
 
             if(this.isDeleting){
                 // We use half the time
@@ -76,7 +76,7 @@
                 (this.wordsIndex === this.words.length - 1)? this.wordsIndex = 0 : this.wordsIndex++;
                 
                 // Use the waiting time between each word
-                typeSpeed = 1500;
+                typeSpeed = 1000;
             }
 
             // Recall tyoe funtion.
@@ -84,7 +84,7 @@
         }
     }
 
-    const typeWriter = new TypeWriter(endPointUrl, endPoints, 3000 );
+    const typeWriter = new TypeWriter(endPointUrl, endPoints, 2000 );
 
     // Call function
     typeWriter.type();
