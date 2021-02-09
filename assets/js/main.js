@@ -80,7 +80,7 @@
             }
 
             // Recall tyoe funtion.
-            setTimeout(()=>this.type(), 100);
+            setTimeout(()=>this.type(), typeSpeed);
         }
     }
 
