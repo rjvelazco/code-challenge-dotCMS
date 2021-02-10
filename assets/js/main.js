@@ -6,6 +6,8 @@
 
     const endPoints = ['/filter/Grayscale', '/crop_w/500/crop_h/500/fp/.65,.37', '/resize_w/800/resize_h/600', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0',''];
     
+    const flashAnimated = document.querySelector('.txt');
+    
     class TypeWriter{
         constructor(element, words, time=5000){
 
@@ -40,7 +42,7 @@
             }
 
             // Add the new element into the document
-            this.element.innerHTML =  `<span class="txt">${this.txt}</pan>`;
+            this.element.innerHTML =  `${this.txt}`;
 
             // Type Sepped by default
             let typeSpeed = 200;
@@ -50,6 +52,8 @@
                 // remove is faster than add.
                 typeSpeed /=2;
             }
+            
+            
 
             if(!this.isDeleting && this.txt === fullTxt){
 
@@ -60,6 +64,12 @@
                 // Set delete to true;
                 this.isDeleting = true;
 
+
+                // Add flash class
+                flashAnimated.classList.add('flash');
+
+                // Remove flash class after 2s
+                setTimeout(()=>flashAnimated.classList.remove('flash'), typeSpeed);
                 // Change the src attribute
                 img.setAttribute('src', `${baseUrl}${this.txt}`);
 
@@ -73,6 +83,12 @@
                 
                 // Use the waiting time between each word
                 typeSpeed = 1000;
+
+                // Add flash class
+                flashAnimated.classList.add('flash');
+
+                // Remove flash class after 1s
+                setTimeout(()=>flashAnimated.classList.remove('flash'), typeSpeed);
             }
 
             // Recall tyoe funtion.
