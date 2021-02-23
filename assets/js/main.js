@@ -1,135 +1,130 @@
 (()=>{
 
     const img = document.querySelector('.img'),
-    endPoint = document.querySelector('#endPoint'),
-    contentText = document.querySelector('.card-body');
-    // baseUrl = document.querySelector('#img').getAttribute('src');
+    imgContainer = document.querySelector('.imgContainer'),
+    contentText = document.querySelector('.card-body'),
+    endPointContainer = document.querySelector('#endPoint'),
+    blinkingCursor = document.querySelector('.cursor-effect');
 
-    const endPoints = ['/filter/Grayscale', '/crop_w/500/crop_h/500/fp/.65,.37', '/resize_w/800/resize_h/600', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0',''];
     
-    const flashAnimated = document.querySelector('.cursor-effect');
-    
+    // ENDPOINTS    
+    const endPoints = ['/resize_w/800/resize_h/600', '/crop_w/500/crop_h/500/fp/.65,.37', '/focalpoints/fp-x=45%/f-py=45%/scale(1.2)', '/filter/Grayscale', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0',''];
+ 
     class TypeWriter{
-        constructor(element, words, time=5000){
 
-            // Set the properties 
+        constructor(element, words, time = 5000){
+
+            // Set properties
             this.element = element;
             this.words = words;
-            this.txt = '';
-
-            // Inizialice the firs word
-            this.wordsIndex = 0;
-            
-            // set time 
             this.time = parseInt(time, 10);
 
+            // New properties
+            this.txt = '';
+            this.wordsIndex = 0;
             this.isDeleting = false;
         }
 
+
         type(){
-
-            // Current index of word
-            const current = this.wordsIndex;
-
-            // Get the word
-            const fullTxt = this.words[current];
-
-            if(this.isDeleting){
-                // Remove one letter
-                this.txt = fullTxt.substring(0,this.txt.length-1);
-            } else{
-                // Add one letter
-                this.txt = fullTxt.substring(0,this.txt.length+1);
-            }
-
-            // Add the new element into the document
-            this.element.innerHTML =  `${this.txt}`;
-
-            // Type Sepped by default
-            let typeSpeed = 200;
-
-            if(this.isDeleting){
-                // We use half the time
-                // remove is faster than add.
-                typeSpeed /=2;
-            }
+            const currentIndex = this.wordsIndex;
+            const fullTxt = this.words[currentIndex];
+            let typeSpeed = (this.isDeleting)? 200: 100;
             
-            
+            (this.isDeleting)
+                    ? this.txt = fullTxt.substring(0, this.txt.length - 1)
+                    : this.txt = fullTxt.substring(0, this.txt.length + 1);
+
+            this.element.innerHTML = `${this.txt}`;
+
+
             if(!this.isDeleting && this.txt === fullTxt){
 
-                // Make pause at the end
-                // Time between typing and erasing
+                this.isDeleting = true;
                 typeSpeed = this.time;
 
-                // Set delete to true;
-                this.isDeleting = true;
+                toggleBlinkingEffect(typeSpeed);
+                toggleTransition(currentIndex, true);
+                deleteWord();
 
-
-                // Add flash class
-                flashAnimated.classList.add('flash');
-
-                toggleTransition(current);
-                // Remove flash class after 2s
-                setTimeout(()=>flashAnimated.classList.remove('flash'), typeSpeed);
-                // Change the src attribute
-
-            } else if(this.isDeleting && this.txt === ''){
-                // Set delete to false
-                // The word is over
+            } else if(this.isDeleting && this.txt === '') {
                 this.isDeleting = false;
 
-                toggleTransition(current);
+                (this.wordsIndex === (this.words.length -1))
+                ? this.wordsIndex = 0
+                : this.wordsIndex++;
 
-                // Conditional to reset the currentWordIndex
-                (this.wordsIndex === this.words.length - 1)? this.wordsIndex = 0 : this.wordsIndex++;
-                
-                // Use the waiting time between each word
                 typeSpeed = 1000;
-
-                // Add flash class
-                flashAnimated.classList.add('flash');
-
-                // Remove flash class after 1s
-                setTimeout(()=>flashAnimated.classList.remove('flash'), typeSpeed);
+                toggleTransition(currentIndex);
+                toggleBlinkingEffect(typeSpeed);
             }
 
-            // Recall tyoe funtion.
             setTimeout(()=>this.type(), typeSpeed);
         }
     }
 
-    const toggleTransition = (wordIndex)=>{
-        switch (wordIndex) {
+    const toggleTransition = (wordIndex, reset = false) =>{
+        switch (wordIndex){
             case 0:
-                img.classList.toggle('grey-scale');
+                img.classList.add('resized');
             break;
-
             case 1:
+                if(img.classList.contains('cropped')){
+                    setTimeout(img.classList.remove('resized'), 1000);
+                }
                 img.classList.toggle('cropped');
             break;
-
             case 2:
-                img.classList.toggle('resized');
+                showFocalPoints();
             break;
-
             case 3:
-                if(img.classList.contains('hsb')){
-                    toggleShowClass();
-                    setTimeout(()=>{
-                        toggleShowClass();
-                    }, 1000);
-                }
+                img.classList.toggle('grey-scale');
+            break;
+            case 4:
                 img.classList.toggle('hsb');
+            break;
+            case 5:
+               if(reset){
+                   resetAnimations();
+               }
             break;
         }
     }
-    const toggleShowClass = ()=>{
-        contentText.classList.toggle('show');
+
+    const toggleShowClass = () => contentText.classList.toggle('show');
+
+    
+    const resetAnimations = ()=>{
+        toggleShowClass();
+        img.classList.remove('zoomScale');
+        setTimeout(()=>toggleShowClass(), 1200);
+    }
+    
+    const showFocalPoints = ()=>{
+        imgContainer.classList.toggle('show');
+        setTimeout(()=>imgContainer.classList.add('move'), 1000);
+        setTimeout(()=>{
+            imgContainer.classList.remove('move');
+            img.classList.add('zoomScale');
+        }, 1500);
+    }
+    
+    const toggleBlinkingEffect = (Speed)=>{
+        blinkingCursor.classList.add('blinking');
+        setTimeout(()=>blinkingCursor.classList.remove('blinking'), Speed);
     }
 
-    const typeWriter = new TypeWriter(endPoint, endPoints, 2000 );
+    const deleteWord = ()=>{
+        setTimeout(()=>endPointContainer.classList.add('highlight'), 1500);
+        setTimeout(()=>{;
+            typeWriter.txt = '';
+            typeWriter.element.innerHTML = '';
+            endPointContainer.classList.remove('highlight');
+        }, 2500);
+    }
+
+    const typeWriter = new TypeWriter(endPointContainer, endPoints, 2500);
     toggleShowClass();
 
-    // Call function
     typeWriter.type();
 })();
