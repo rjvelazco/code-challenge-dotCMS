@@ -78,10 +78,13 @@
                 showFocalPoints();
             break;
             case 3:
-                img.classList.toggle('grey-scale');
+                img.classList.add('grey-scale');
             break;
             case 4:
                 img.classList.toggle('hsb');
+                if(img.classList.contains('grey-scale')){
+                    img.classList.remove('grey-scale');
+                }
             break;
             case 5:
                if(reset){

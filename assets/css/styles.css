@@ -30,6 +30,8 @@
     justify-content: center;
     width: 100%;
     min-height: 100vh;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .container .card{
@@ -39,6 +41,7 @@
     justify-content: center;
     padding: 10px;
     overflow: hidden;
+    min-height: 888px;
 }
 
 .container .card .card-header{
@@ -103,7 +106,7 @@
     /* transition: transform .5s ease; */
 }
 
-.container .card .card-body{
+.container .card-body{
     background-color: var(--bg-input-color);
     border-radius: 4px;
     box-shadow:4px 10px 10px var(--input-shadow);
@@ -122,22 +125,22 @@
     white-space: nowrap;
     
     position: relative;
-    bottom: 200px;
+    bottom: 150px;
 
-    z-index: 2;
+    z-index: 4;
     transition: transform 1s ease;
     transform: translateY(1000%);
 }
 
-.container .card .card-body .textContainer{
+.container .card-body .textContainer{
     text-align: right;
 }
 
-.container .card .card-body.show{
+.container .card-body.show{
     transform: translateY(0px);
 }
 
-.container .card .card-body .textContainer #endPoint{
+.container .card-body .textContainer #endPoint{
     color: #19A2F1;
 }
 
