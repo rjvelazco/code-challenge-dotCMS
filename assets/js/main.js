@@ -9,7 +9,7 @@
     
 
     // ENDPOINTS    
-    const endPoints = ['/resize_w/800/resize_h/600', '/crop_w/500/crop_h/500', true, '/fp/.69', ',.67', '/crop_w/500/crop_h/500/', true, '/filter/Grayscale', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0', ''];
+    const endPoints = ['/resize_w/800/resize_h/600', '/crop_w/500/crop_h/500', true, '/fp', '/.69,.67', '/crop_w/500/crop_h/500/', true, '/filter/Grayscale', '/hsb_h/-1.0/hsb_s/0.0/hsb_b/1.0', ''];
  
 
     // Times
@@ -110,10 +110,10 @@
                 img.classList.toggle('cropped');
             break;
             case 3:
-                showFocalLeft();
+                showFocalPoints();
             break;
             case 4:
-                showFocalBottom();
+                moveFocalPoints();
             break;
             case 5:
                 hideFocalPoints();
@@ -136,14 +136,14 @@
         setTimeout(()=>toggleShowClass(), time1000s);
     }
     
-    const showFocalLeft = ()=>{
+    const showFocalPoints = ()=>{
         imgContainer.classList.add('showLeft');
-        setTimeout(()=>imgContainer.classList.add('moveLeft'), time1000s);
+        imgContainer.classList.add('showBottom');
     }
 
-    const showFocalBottom = ()=>{
-        imgContainer.classList.add('showBottom');
-        setTimeout(()=>imgContainer.classList.add('moveBottom'), time1000s);
+    const moveFocalPoints = ()=>{
+        imgContainer.classList.add('moveLeft');
+        imgContainer.classList.add('moveBottom');
     }
     
     const hideFocalPoints = () =>{
