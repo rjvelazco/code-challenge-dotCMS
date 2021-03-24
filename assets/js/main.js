@@ -1,10 +1,10 @@
 (()=>{
-
     const img = document.querySelector('.img'),
     imgContainer = document.querySelector('.imgContainer'),
-    contentText = document.querySelector('.card-body'),
+    contentText = document.querySelector('.card-body-img-api'),
     endPointContainer = document.querySelector('#endPoint'),
     blinkingCursor = document.querySelector('.cursor-effect');
+
 
     
 
@@ -41,7 +41,7 @@
         type(){
             const currentIndex = this.wordsIndex;
             let fullTxt = this.words[currentIndex];
-            let typeSpeed = (this.isDeleting)? 200: 100;
+            let typeSpeed = (this.isDeleting)? 150: 100;
             
             if(currentIndex === this.words.length - 1){
 
@@ -113,10 +113,13 @@
                 showFocalPoints();
             break;
             case 4:
-                moveFocalPoints();
+                moveFocalPoints()
             break;
             case 5:
-                hideFocalPoints();
+                imgContainer.classList.add('minimun');
+                setTimeout(()=>{
+                    hideFocalPoints();
+                }, 600);
             break;
             case 7:
                 img.classList.add('grey-scale');
@@ -131,9 +134,7 @@
 
     
     const resetAnimations = ()=>{
-        toggleShowClass();
         imgContainer.classList.remove('zoomScale');
-        setTimeout(()=>toggleShowClass(), time1000s);
     }
     
     const showFocalPoints = ()=>{
@@ -149,9 +150,9 @@
     const hideFocalPoints = () =>{
         imgContainer.classList.add('zoomScale');
         setTimeout(()=>{
-            imgContainer.classList.remove('showBottom');
             imgContainer.classList.remove('showLeft');
-        }, 1800);
+            imgContainer.classList.remove('showBottom');
+        },1400);
     }
     
     const toggleBlinkingEffect = (Speed)=>{
@@ -175,6 +176,7 @@
         setTimeout(()=>{
             imgContainer.classList.remove('moveBottom');
             imgContainer.classList.remove('moveLeft');
+            imgContainer.classList.remove('minimun');
             img.classList.remove('grey-scale');
             img.classList.remove('hsb');
             resetAnimations();  
@@ -184,9 +186,7 @@
     const typeWriter = new TypeWriter(endPointContainer, endPoints, time1000s);
 
     setTimeout(()=>{
-
         typeWriter.type();
     }, time1500s);
-    toggleShowClass();
 
 })();
